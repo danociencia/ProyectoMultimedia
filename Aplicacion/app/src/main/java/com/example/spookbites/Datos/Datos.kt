@@ -6,7 +6,7 @@ import com.example.spookbites.model.TipoRelato
 val relatos = listOf(
     Relato(
         id = 1,
-        titulo = "The Man",
+        titulo = "El hombre de anoche",
         autor = "Daniel",
         tipo = TipoRelato.RELATO,
         views = 1000,
