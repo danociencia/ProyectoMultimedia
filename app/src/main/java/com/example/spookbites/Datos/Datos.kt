@@ -1,7 +1,7 @@
-package com.danociencia.spookbites.data
+package com.example.spookbites.Datos
 
-import com.danociencia.spookbites.model.Relato
-import com.danociencia.spookbites.model.TipoRelato
+import com.example.spookbites.model.Relato
+import com.example.spookbites.model.TipoRelato
 
 val relatos = listOf(
     Relato(

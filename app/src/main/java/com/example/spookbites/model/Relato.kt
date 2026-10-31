@@ -1,4 +1,4 @@
-package com.danociencia.spookbites.model
+package com.example.spookbites.model
 
 enum class TipoRelato {
     RELATO,
