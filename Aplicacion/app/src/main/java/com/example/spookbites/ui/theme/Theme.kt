@@ -12,9 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Dorado,
+    secondary = Morado,
+    background = Fondo,
+    surface = Superficie
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -35,9 +36,8 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun SpookbitesTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    darkTheme: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
