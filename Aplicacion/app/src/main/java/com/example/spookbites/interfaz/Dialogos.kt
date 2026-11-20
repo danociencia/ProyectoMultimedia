@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -86,12 +87,11 @@ fun RelatoDialog(
     onCancelar: () -> Unit,
     onGuardar: (titulo: String, autor: String, tipo: TipoRelato, texto: String) -> Unit
 ) {
-    var titulo by remember { mutableStateOf(relatoAEditar?.titulo ?: "") }
-    var autor by remember { mutableStateOf(relatoAEditar?.autor ?: "") }
-    var tipo by remember { mutableStateOf(relatoAEditar?.tipo ?: TipoRelato.RELATO) }
-    var texto by remember { mutableStateOf(relatoAEditar?.texto ?: "") }
-
-    var mostrarErrores by remember { mutableStateOf(false) }
+    var titulo by rememberSaveable { mutableStateOf(relatoAEditar?.titulo ?: "") }
+    var autor by rememberSaveable { mutableStateOf(relatoAEditar?.autor ?: "") }
+    var tipo by rememberSaveable { mutableStateOf(relatoAEditar?.tipo ?: TipoRelato.RELATO) }
+    var texto by rememberSaveable { mutableStateOf(relatoAEditar?.texto ?: "") }
+    var mostrarErrores by rememberSaveable { mutableStateOf(false) }
 
     val tituloError = if (titulo.isBlank()) "El título es obligatorio" else null
     val autorError = if (autor.isBlank()) "El autor es obligatorio" else null
