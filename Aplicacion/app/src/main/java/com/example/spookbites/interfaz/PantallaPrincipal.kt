@@ -114,6 +114,7 @@ fun PantallaPrincipal(
 
 @Composable
 fun RelatoCard(relato: Relato, onClick: () -> Unit) {
+
     ElevatedCard(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 5.dp)
@@ -132,6 +133,11 @@ fun RelatoCard(relato: Relato, onClick: () -> Unit) {
             }
             Spacer(modifier = Modifier.width(12.dp))
             Column {
+                Text(
+                    if (relato.tipo == TipoRelato.RELATO) "Relato" else "Una línea",
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.secondary
+                )
                 Text(
                     relato.titulo,
                     fontFamily = FontFamily.Serif,
