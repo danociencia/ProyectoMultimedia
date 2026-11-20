@@ -45,7 +45,7 @@ object RelatoRepository {
         Relato(
             titulo = "El vecino del cuarto",
             autor = "Reddit",
-            tipo = TipoRelato.RELATOCORTO,
+            tipo = TipoRelato.RELATO,
             views = 3213,
             likes = 24,
             texto = "Cada noche, a la misma hora, alguien da tres golpes en el techo de mi piso. Siempre tres. Siempre a las doce y cuarto.\n" +
