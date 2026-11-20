@@ -1,14 +1,12 @@
 package com.example.spookbites.interfaz
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -32,17 +30,21 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.spookbites.datos.RelatoRepository
 import com.example.spookbites.model.Relato
-import com.example.spookbites.model.TipoRelato
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,16 +55,15 @@ fun PantallaDetalle(
     onEditar: () -> Unit,
     onBorrar: () -> Unit
 ) {
+    var volumen by remember { mutableStateOf(0.5f) }
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(relato.titulo) },
+                title = {},
                 navigationIcon = {
                     IconButton(onClick = onVolver) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Volver a la lista"
-                        )
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver a la lista")
                     }
                 }
             )
@@ -74,57 +75,62 @@ fun PantallaDetalle(
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            if (relato.tipo == TipoRelato.RELATO) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(180.dp)
-                        .background(Color.LightGray)
-                )
-            }
+            Text(
+                relato.titulo,
+                fontFamily = FontFamily.Serif,
+                fontWeight = FontWeight.Bold,
+                fontSize = 28.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Text(
+                "Autor: ${relato.autor} · ${relato.views} views · ${relato.likes} likes",
+                fontSize = 13.sp,
+                color = Color.Gray,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
 
-            Text(text = relato.titulo, fontSize = 26.sp, fontWeight = FontWeight.Bold)
-            Text(text = "Autor: ${relato.autor}")
-            Text(text = if (relato.tipo == TipoRelato.RELATO) "Tipo: Relato" else "Tipo: Relato de una línea")
-            Text(text = "${relato.views} views - ${relato.likes} likes")
-
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = {}, enabled = false) {
-                    Icon(Icons.Default.PlayArrow, contentDescription = "Reproducir ambiente")
-                }
-                Slider(
-                    value = 0f,
-                    onValueChange = {},
-                    enabled = false,
-                    modifier = Modifier.weight(1f)
-                )
-            }
-
-            Text(text = relato.texto, fontSize = 18.sp)
-
-            Row(
+            Text(
+                relato.texto,
+                fontSize = 18.sp,
+                lineHeight = 28.sp,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
+                    .border(1.dp, Color.Gray)
+                    .padding(16.dp)
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(Icons.Default.PlayArrow, contentDescription = "Ambiente", tint = MaterialTheme.colorScheme.primary)
+                Slider(
+                    value = volumen,
+                    onValueChange = { volumen = it },
+                    modifier = Modifier.width(160.dp)
+                )
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                horizontalArrangement = Arrangement.End
             ) {
                 OutlinedButton(onClick = onEditar) {
                     Icon(Icons.Default.Edit, contentDescription = null)
-                    Spacer(Modifier.width(8.dp))
                     Text("Editar")
                 }
+                Spacer(modifier = Modifier.width(8.dp))
                 Button(
                     onClick = onBorrar,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.error,
-                        contentColor = MaterialTheme.colorScheme.onError
-                    )
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
                 ) {
                     Icon(Icons.Default.Delete, contentDescription = null)
-                    Spacer(Modifier.width(8.dp))
                     Text("Eliminar")
                 }
             }
